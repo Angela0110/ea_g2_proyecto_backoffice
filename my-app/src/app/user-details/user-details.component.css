@@ -1,0 +1,23 @@
+.required-error {
+    color: red;
+  }
+
+.post {
+    margin-left: 35px;
+}
+
+.custom-button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #dde9f5; /* Color de fondo del botón */
+    color: #090909; /* Color del texto */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 10px; /* Ajusta la separación vertical entre los botones */
+}
+
+.custom-button:hover {
+    background-color: #0056b3; /* Cambia el color de fondo al pasar el mouse */
+}
+

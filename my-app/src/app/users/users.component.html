@@ -1,0 +1,60 @@
+<h2>My Users</h2>
+
+<button type="button" *ngIf="!showAddUserForm && !selectedUser && !isUserSelected" (click)="showAddUser(true)">Add new user</button>
+<button type="button" *ngIf="showAddUserForm && !selectedUser && !isUserSelected" (click)="showAddUser(false)">-</button>
+
+<div *ngIf="showAddUserForm && !selectedUser && !isUserSelected">
+  <form [formGroup]="newUserForm" (ngSubmit)="postUser()">
+
+    <div formGroupName="name">
+      <label for="first_name" >First Name:</label>
+      <input type="text" id="first_name" formControlName="first_name"><br>
+      <div *ngIf="newUserForm.get('name.first_name')?.invalid && (newUserForm.get('name.first_name')?.dirty || newUserForm.get('name.first_name')?.touched)">
+        <div *ngIf="newUserForm.get('name.first_name')?.errors?.['required']" class="required-error">First Name es obligatorio.</div>
+      </div>
+    
+      <label for="middle_name">Middle Name:</label>
+      <input type="text" id="middle_name" formControlName="middle_name"><br>
+      <div *ngIf="newUserForm.get('name.middle_name')?.invalid && (newUserForm.get('name.middle_name')?.dirty || newUserForm.get('name.middle_name')?.touched)">
+        <div *ngIf="newUserForm.get('name.middle_name')?.errors?.['required']" class="required-error">Middle Name es obligatorio.</div>
+      </div>
+    
+      <label for="last_name">Last Name:</label>
+      <input type="text" id="last_name" formControlName="last_name"><br>
+      <div *ngIf="newUserForm.get('name.last_name')?.invalid && (newUserForm.get('name.last_name')?.dirty || newUserForm.get('name.last_name')?.touched)">
+        <div *ngIf="newUserForm.get('name.last_name')?.errors?.['required']" class="required-error">Last Name es obligatorio.</div>
+      </div>
+    </div>
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" formControlName="email"><br>
+    <div *ngIf="newUserForm.get('email')?.invalid && (newUserForm.get('email')?.dirty || newUserForm.get('email')?.touched)">
+      <div *ngIf="newUserForm.get('email')?.errors?.['required']" class="required-error">Email es requerido.</div>
+      <div *ngIf="newUserForm.get('email')?.errors?.['email']" class="required-error">El formato del correo electrónico no es válido.</div>
+    </div>
+    
+    <label for="phone_number">Phone Number:</label>
+    <input type="tel" id="phone_number" formControlName="phone_number"><br>
+    <div *ngIf="newUserForm.get('phone_number')?.invalid && (newUserForm.get('phone_number')?.dirty || newUserForm.get('phone_number')?.touched)">
+      <div *ngIf="newUserForm.get('phone_number')?.errors?.['required']" class="required-error">Phone Number es obligatorio.</div>
+    </div>
+    
+    <label for="gender">Gender:</label>
+    <input type="text" id="gender" formControlName="gender"><br>
+    <div *ngIf="newUserForm.get('gender')?.invalid && (newUserForm.get('gender')?.dirty || newUserForm.get('gender')?.touched)">
+      <div *ngIf="newUserForm.get('gender')?.errors?.['required']" class="required-error">Gender es obligatorio.</div>
+    </div>
+    
+    <button type="submit" [disabled]="newUserForm.invalid">Add User</button> 
+  </form>
+</div>
+
+<ul class="users" *ngIf="!selectedUser">
+  <li *ngFor="let user of users">
+    <button type="button" (click)="onSelect(user)">
+      <span  class="name">{{user.name.first_name}} {{user.name.middle_name}} {{user.name.last_name}}</span>
+    </button>
+  </li>
+</ul>
+
+<app-user-details *ngIf="selectedUser" [user]="selectedUser" (deselect)="deselectUser()" (userUpdated)="onUserUpdated($event)"></app-user-details> 

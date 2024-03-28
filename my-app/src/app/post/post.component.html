@@ -1,0 +1,12 @@
+<h2>My Posts</h2>
+
+<ul class="users" *ngIf="!selectedPost">
+  <li *ngFor="let post of posts">
+    <button type="button" (click)="onSelect(post)">
+      <span  class="name">{{post.title}}</span>
+    </button>
+  </li>
+</ul>
+
+<app-post-details *ngIf="selectedPost" [post]="selectedPost" (deselect)="deselectPost()" (postUpdated)="onPostUpdated($event)"></app-post-details> 
+
