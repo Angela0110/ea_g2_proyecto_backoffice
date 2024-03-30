@@ -2,32 +2,32 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import {CommonModule, NgIf, UpperCasePipe} from '@angular/common';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';;
 import { User } from '../models/user';
-import { Post } from '../models/post';
-import { PostDetailsComponent } from '../post-details/post-details.component';
+import { Activity } from '../models/activity';
+import { ActivityDetailsComponent } from '../activity-details/activity-details.component';
 import { UserService } from '../services/user.service';
-import { PostService } from '../services/post.service';
+import { ActivityService } from '../services/activity.service';
 
 
 @Component({
   selector: 'app-user-details',
   standalone: true,
   templateUrl: './user-details.component.html',
-  imports: [FormsModule, NgIf, UpperCasePipe, CommonModule, PostDetailsComponent, ReactiveFormsModule],
+  imports: [FormsModule, NgIf, UpperCasePipe, CommonModule, ActivityDetailsComponent, ReactiveFormsModule],
   styleUrl: './user-details.component.css'
 })
 export class UserDetailsComponent {
   @Input() user?: User;
   @Output() deselect = new EventEmitter<void>();
-  @Output() showPostDetails = new EventEmitter<Post>();
+  @Output() showPostDetails = new EventEmitter<Activity>();
   @Output() userUpdated = new EventEmitter<User>();
-  @Output() postSelected = new EventEmitter<boolean>();
+  @Output() activitySelected = new EventEmitter<boolean>();
 
   editUserForm: FormGroup;
-  selectedPost?: Post;
-  postUpdated?: Post;
+  selectedActivity?: Activity;
+  activityUpdated?: Activity;
 
 
-  posts: Post[] = [];
+  activities: Activity[] = [];
 
   editUser: User=   {  '_id': '',
   'name': {
@@ -39,9 +39,10 @@ export class UserDetailsComponent {
  'phone_number':'',
  'gender':''
 };
+  showActivityDetails: any;
 
 
-constructor(public userService: UserService, public postService: PostService, private formBuilder: FormBuilder) {
+constructor(public userService: UserService, public activityService: ActivityService, private formBuilder: FormBuilder) {
   this.editUserForm = this.formBuilder.group({
     name: this.formBuilder.group({
       first_name: ['', [Validators.required]],
@@ -71,22 +72,22 @@ public updateFormWithUserData(user: User): void {
 }
 
   update: boolean= false;
-  isPostSelected: boolean = false;
+  isActivitySelected: boolean = false;
 
   ngOnInit() {
     if (this.user) {
       this.updateFormWithUserData(this.user);
     } 
     
-    this.posts = this.user?.posts ?? [];
+    this.activities = this.user?.activities ?? [];
   }
  
-  onPostUpdated(post: Post): void {
-    this.postUpdated = post;
+  onActivityUpdated(activity: Activity): void {
+    this.activityUpdated = activity;
   }
 
-  showPost(post: Post): void {
-    this.showPostDetails.emit(post);
+  showActivity(activity: Activity): void {
+    this.showActivityDetails.emit(activity);
   }
 
   updateEdit(state: boolean) {
@@ -125,23 +126,23 @@ public updateFormWithUserData(user: User): void {
     });
   }
 
-  onSelect(post: Post): void {
-    this.selectedPost = post;
-    this.isPostSelected = true;
-    this.postSelected.emit(true);
+  onSelect(activity: Activity): void {
+    this.selectedActivity = activity;
+    this.isActivitySelected = true;
+    this.activitySelected.emit(true);
   }
 
-  deselectPost(): void {
-    if (this.selectedPost && this.postUpdated) {
-      const index = this.posts.findIndex(post => post._id === this.selectedPost!._id);
+  deselectActivity(): void {
+    if (this.selectedActivity && this.activityUpdated) {
+      const index = this.activities.findIndex(post => post._id === this.selectedActivity!._id);
       if (index !== -1) {
-        this.posts[index] = this.postUpdated;
+        this.activities[index] = this.activityUpdated;
       }
     }
      
-    this.selectedPost = undefined;
-    this.isPostSelected = false;
-    this.postSelected.emit(false); // Emitir false cuando se deselecciona un usuario
+    this.selectedActivity = undefined;
+    this.isActivitySelected = false;
+    this.activitySelected.emit(false); // Emitir false cuando se deselecciona un usuario
   }
 
 }

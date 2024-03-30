@@ -1,0 +1,12 @@
+<h2>My Activities</h2>
+
+<ul class="users" *ngIf="!selectedActivity">
+  <li *ngFor="let activity of activities">
+    <button type="button" (click)="onSelect(activity)">
+      <span  class="name">{{activity.name}}</span>
+    </button>
+  </li>
+</ul>
+
+<app-activity-details *ngIf="selectedActivity" [activity]="selectedActivity" (deselect)="deselectActivity()" (activityUpdated)="onActivityUpdated($event)"></app-activity-details> 
+

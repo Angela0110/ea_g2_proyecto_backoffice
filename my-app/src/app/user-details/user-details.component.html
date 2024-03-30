@@ -1,7 +1,7 @@
-<button *ngIf="!update && !isPostSelected" (click)="updateEdit(true)">Modo Edición</button>
-<button *ngIf="update && !isPostSelected" (click)="updateEdit(false)">Modo Lectura</button>
+<button *ngIf="!update && !isActivitySelected" (click)="updateEdit(true)">Modo Edición</button>
+<button *ngIf="update && !isActivitySelected" (click)="updateEdit(false)">Modo Lectura</button>
 
-<div *ngIf="update && !isPostSelected">
+<div *ngIf="update && !isActivitySelected">
   <form [formGroup]="editUserForm" (ngSubmit)="updateUser()">
 
     <div formGroupName="name">
@@ -48,17 +48,17 @@
   </form>
 </div>
 
-<div *ngIf="user && !isPostSelected">
+<div *ngIf="user && !isActivitySelected">
   <h2>{{user.name.first_name}} {{user.name.middle_name}} {{user.name.last_name}}</h2>
   <div><span>ID:</span> {{user._id}}</div>
   <div><span>Email:</span> {{user.email}}</div>
   <div><span>Phone Number:</span> {{user.phone_number}}</div>
   <div><span>Gender:</span> {{user.gender}}</div>
-  <div><span>Posts:</span> 
-    <div *ngIf="user.posts" class="post">
-      <li *ngFor="let post of posts">
-        <div class="custom-button" type="button" (click)="onSelect(post)">
-          <span> {{post.title}} </span>
+  <div><span>Activities:</span> 
+    <div *ngIf="user.activities" class="activity">
+      <li *ngFor="let activity of activities">
+        <div class="custom-button" type="button" (click)="onSelect(activity)">
+          <span> {{activity.name}} </span>
         </div>
       </li>
     </div>
@@ -67,4 +67,4 @@
   <button (click)="deselect.emit()">Back to users</button>
 </div>
 
-<app-post-details *ngIf="selectedPost" [post]="selectedPost" (deselect)="deselectPost()" (postUpdated)="onPostUpdated($event)"></app-post-details> 
+<app-activity-details *ngIf="selectedActivity" [activity]="selectedActivity" (deselect)="deselectActivity()" (activityUpdated)="onActivityUpdated($event)"></app-activity-details> 

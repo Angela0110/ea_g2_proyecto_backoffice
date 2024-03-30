@@ -2,7 +2,7 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
 import { User } from '../models/user';
 import {FormsModule} from '@angular/forms';
 import { UserDetailsComponent } from '../user-details/user-details.component';
-import { PostDetailsComponent } from '../post-details/post-details.component';
+import { ActivityDetailsComponent } from '../activity-details/activity-details.component';
 import { UserService } from '../services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
