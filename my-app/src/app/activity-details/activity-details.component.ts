@@ -22,6 +22,8 @@ export class ActivityDetailsComponent {
 
   ActivityID?: string;
 
+  rating:number = 0;
+
   user: User =  {  '_id': '',
   'name': {
    'first_name': '',
@@ -68,6 +70,7 @@ public updateFormWithActivityData(activity: Activity): void {
 
   ngOnInit() {
     if (this.activity) {
+      this.rating = +this.activity.rate!.toFixed(1);
       this.ActivityID = this.activity._id;
       this.updateFormWithActivityData(this.activity);
     };

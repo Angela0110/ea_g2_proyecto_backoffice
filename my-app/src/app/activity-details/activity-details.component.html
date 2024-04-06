@@ -25,6 +25,7 @@
   <h2>{{activity.name}} </h2>
   <div><span>ID:</span> {{activity._id}}</div>
   <div><span>Content:</span> {{activity.description}}</div>
+  <div><span>{{rating}} ☆</span></div>
   <div *ngIf="user && user.name?.first_name"><span>Author:</span> 
     <div class="author-details">
       <div><span>ID:</span> {{user._id}}</div>

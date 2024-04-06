@@ -1,11 +1,45 @@
 <h3>Comments:</h3>
 
-<ul class="comments">
-    <li *ngFor="let comment of comments">
-        <div><span class="title">{{comment.title}}</span></div>
-        <div><span  class="content">{{comment.content}}</span></div>
-        <div><span  class="review">{{comment.review}} stars</span></div>
-        <div><span  class="users">{{comment.users}}</span></div>
+<div class="commentBox">
+    <p>Leave a comment</p>
+    <form [formGroup]="postCommentForm" (ngSubmit)="postComment()">
+    
+        <input type="text" id="user" formControlName="users" placeholder="User ID"><br>
+        <div *ngIf="postCommentForm.get('users')?.invalid && (postCommentForm.get('users')?.dirty || postCommentForm.get('users')?.touched)">
+          <div *ngIf="postCommentForm.get('users')?.errors?.['required']" class="required-error">ID es requerido.</div>
+        </div>
+        
+        <input type="text" id="title" formControlName="title" placeholder="Title"><br>
+        <div *ngIf="postCommentForm.get('title')?.invalid && (postCommentForm.get('title')?.dirty || postCommentForm.get('title')?.touched)">
+          <div *ngIf="postCommentForm.get('title')?.errors?.['required']" class="required-error">Título es requerido.</div>
+        </div>
+        
+        <textarea type="text" id="content" cols="30" rows="10" formControlName="content" placeholder="Write your review here..."></textarea>
+        <div *ngIf="postCommentForm.get('content')?.invalid && (postCommentForm.get('content')?.dirty || postCommentForm.get('content')?.touched)">
+          <div *ngIf="postCommentForm.get('content')?.errors?.['required']" class="required-error">Content es requerido.</div>
+        </div>
         <br>
-    </li>
-  </ul>
+        <input type="number" id="rating" formControlName="review" placeholder="Rating 1-5"><br>
+        <div *ngIf="postCommentForm.get('review')?.invalid && (postCommentForm.get('review')?.dirty || postCommentForm.get('review')?.touched)">
+          <div *ngIf="postCommentForm.get('review')?.errors?.['required']" class="required-error">Rating es requerido.</div>
+        </div>
+          
+        <button type="submit" [disabled]="postCommentForm.invalid">Post</button> 
+    
+      </form>
+</div>
+<div>
+    <ul class="comments">
+        <li *ngFor="let comment of comments">
+            <div><span class="title">{{comment.title}}:</span></div>
+            <div><span  class="content">{{comment.content}}</span></div>
+            <div><span  class="review">{{comment.review}} ☆</span></div>
+            <div><span  class="users">User ID: {{comment.users}}</span></div>
+            <button type="button" (click)="deleteComment(comment)">Delete comment</button>
+            <br>
+        </li>
+        <button type="button" (click)="previousPage()" [disabled]="first_page"><span>{{previous}}</span></button>
+        <button type="button" (click)="nextPage()" [disabled]="last_page"><span>{{next}}</span></button>
+      </ul>
+</div>
+

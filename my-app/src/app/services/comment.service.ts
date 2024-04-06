@@ -9,16 +9,20 @@ export class CommentService {
 
   constructor(private http:HttpClient) { }
 
+  postComment(newComment: Comment){
+    return this.http.post<void>('http://127.0.0.1:3000/comment', newComment);
+  }
+
   getComments(activityID: String, page: number) {
     return this.http.get<Comment[]>('http://127.0.0.1:3000/comment/' + activityID + '/' + page);
   }
 
-  postComent(newActivity : Comment |undefined) {
-    return this.http.post('http://127.0.0.1:3000/activity', newActivity);
+  commentLength(activityID: String) {
+    return this.http.get<number>('http://127.0.0.1:3000/commentlength/' + activityID);
   }
 
-  updateComent(editActivity : Comment) {
-    return this.http.put('http://127.0.0.1:3000/activity/'+ editActivity._id, editActivity);
+  deleteComment(commentID: String) {
+    return this.http.delete<void>('http://127.0.0.1:3000/comment/' + commentID);
   }
 
 }
