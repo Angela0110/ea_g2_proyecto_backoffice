@@ -1,0 +1,11 @@
+<h3>Comments:</h3>
+
+<ul class="comments">
+    <li *ngFor="let comment of comments">
+        <div><span class="title">{{comment.title}}</span></div>
+        <div><span  class="content">{{comment.content}}</span></div>
+        <div><span  class="review">{{comment.review}} stars</span></div>
+        <div><span  class="users">{{comment.users}}</span></div>
+        <br>
+    </li>
+  </ul>

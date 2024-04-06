@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import {CommonModule, NgIf, UpperCasePipe} from '@angular/common';
 import { Activity } from '../models/activity';
 import { ActivityService } from '../services/activity.service';
+import { CommentsComponent } from '../comments/comments.component';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { User } from '../models/user';
 
@@ -9,7 +10,7 @@ import { User } from '../models/user';
   selector: 'app-activity-details',
   templateUrl: './activity-details.component.html',
   styleUrls: ['./activity-details.component.css'],
-  imports: [ NgIf, UpperCasePipe, CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [ NgIf, UpperCasePipe, CommonModule, ReactiveFormsModule, FormsModule, CommentsComponent],
   standalone: true,
 })
 export class ActivityDetailsComponent {
@@ -18,6 +19,8 @@ export class ActivityDetailsComponent {
   @Output() activityUpdated = new EventEmitter<Activity>();
 
   editActivityForm: FormGroup;
+
+  ActivityID?: string;
 
   user: User =  {  '_id': '',
   'name': {
@@ -32,7 +35,7 @@ export class ActivityDetailsComponent {
 
   activities: Activity[] = [];
 
-  editActivity: Activity=   {  '_id': this.user,
+  editActivity: Activity=   {  '_id': this.user._id,
   'name': '',
   'description': '',
   'rate': 0,
@@ -65,6 +68,7 @@ public updateFormWithActivityData(activity: Activity): void {
 
   ngOnInit() {
     if (this.activity) {
+      this.ActivityID = this.activity._id;
       this.updateFormWithActivityData(this.activity);
     };
 

@@ -1,7 +1,7 @@
 import { User } from "./user";
 
 export interface Activity {
-    _id?: User;
+    _id?: string;
     name: string;
     //avatar?: string;
     description: string;
