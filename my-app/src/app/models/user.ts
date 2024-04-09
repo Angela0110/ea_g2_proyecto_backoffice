@@ -8,5 +8,6 @@ export interface User {
     email:string,
     phone_number:string,
     gender:string,
-    activities?: []
+    activities?: [],
+    comments?: []
   }

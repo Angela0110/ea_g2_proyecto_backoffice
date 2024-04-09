@@ -1,7 +1,7 @@
-<button *ngIf="!update && !isActivitySelected" (click)="updateEdit(true)">Modo Edición</button>
-<button *ngIf="update && !isActivitySelected" (click)="updateEdit(false)">Modo Lectura</button>
+<button *ngIf="!update && !isActivitySelected && !isCommentSelected" (click)="updateEdit(true)">Modo Edición</button>
+<button *ngIf="update && !isActivitySelected && !isCommentSelected" (click)="updateEdit(false)">Modo Lectura</button>
 
-<div *ngIf="update && !isActivitySelected">
+<div *ngIf="update && !isActivitySelected && !isCommentSelected">
   <form [formGroup]="editUserForm" (ngSubmit)="updateUser()">
 
     <div formGroupName="name">
@@ -48,7 +48,7 @@
   </form>
 </div>
 
-<div *ngIf="user && !isActivitySelected">
+<div *ngIf="user && !isActivitySelected && !isCommentSelected">
   <h2>{{user.name.first_name}} {{user.name.middle_name}} {{user.name.last_name}}</h2>
   <div><span>ID:</span> {{user._id}}</div>
   <div><span>Email:</span> {{user.email}}</div>
@@ -63,8 +63,18 @@
       </li>
     </div>
   </div> 
+  <div><span>Comments:</span> 
+    <div *ngIf="user.comments" class="comment">
+      <li *ngFor="let comment of comments">
+        <div class="custom-button" type="button" (click)="onSelectComment(comment)">
+          <span> {{comment.title}} </span>
+        </div>
+      </li>
+    </div>
+  </div> 
   
   <button (click)="deselect.emit()">Back to users</button>
 </div>
 
 <app-activity-details *ngIf="selectedActivity" [activity]="selectedActivity" (deselect)="deselectActivity()" (activityUpdated)="onActivityUpdated($event)"></app-activity-details> 
+<app-comment-details *ngIf="selectedComment" [comment]="selectedComment" (deselect)="deselectComment()" (commentUpdated)="onCommentUpdated($event)"></app-comment-details> 

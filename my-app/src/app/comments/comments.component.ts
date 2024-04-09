@@ -14,6 +14,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 })
 export class CommentsComponent {
   @Input() activity?: String;
+  @Output() commentsUpdate = new EventEmitter<void>();
 
   postCommentForm: FormGroup;
 
@@ -43,6 +44,7 @@ export class CommentsComponent {
       await this.commentService.postComment(this.postCommentForm.value).subscribe((res: any) => {
         this.comments.unshift(res.comment);
         this.postCommentForm.reset();
+        this.commentsUpdate.emit();
       });
     } else {
       console.error("El formulario no es válido. No se puede agregar el usuario.");
@@ -96,6 +98,7 @@ export class CommentsComponent {
     console.log("Eliminando " + comment._id);
     this.commentService.deleteComment(comment._id!).subscribe (res =>{
       console.log(res);
+      this.commentsUpdate.emit();
     })
     comment.title = "DELETED";
   }

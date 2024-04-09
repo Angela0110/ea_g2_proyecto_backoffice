@@ -3,7 +3,9 @@ import {CommonModule, NgIf, UpperCasePipe} from '@angular/common';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';;
 import { User } from '../models/user';
 import { Activity } from '../models/activity';
+import { Comment } from '../models/comment';
 import { ActivityDetailsComponent } from '../activity-details/activity-details.component';
+import { CommentDetailsComponent } from '../comment-details/comment-details.component';
 import { UserService } from '../services/user.service';
 import { ActivityService } from '../services/activity.service';
 
@@ -12,7 +14,7 @@ import { ActivityService } from '../services/activity.service';
   selector: 'app-user-details',
   standalone: true,
   templateUrl: './user-details.component.html',
-  imports: [FormsModule, NgIf, UpperCasePipe, CommonModule, ActivityDetailsComponent, ReactiveFormsModule],
+  imports: [FormsModule, NgIf, UpperCasePipe, CommonModule, ActivityDetailsComponent, CommentDetailsComponent,  ReactiveFormsModule],
   styleUrl: './user-details.component.css'
 })
 export class UserDetailsComponent {
@@ -21,13 +23,16 @@ export class UserDetailsComponent {
   @Output() showPostDetails = new EventEmitter<Activity>();
   @Output() userUpdated = new EventEmitter<User>();
   @Output() activitySelected = new EventEmitter<boolean>();
+  @Output() commentSelected = new EventEmitter<boolean>();
 
   editUserForm: FormGroup;
   selectedActivity?: Activity;
   activityUpdated?: Activity;
-
+  selectedComment?: Comment;
+  commentUpdated?: Comment;
 
   activities: Activity[] = [];
+  comments: Comment[] = [];
 
   editUser: User=   {  '_id': '',
   'name': {
@@ -39,8 +44,9 @@ export class UserDetailsComponent {
  'phone_number':'',
  'gender':''
 };
-  showActivityDetails: any;
 
+  showActivityDetails: any;
+  showCommentDetails:any;
 
 constructor(public userService: UserService, public activityService: ActivityService, private formBuilder: FormBuilder) {
   this.editUserForm = this.formBuilder.group({
@@ -73,6 +79,8 @@ public updateFormWithUserData(user: User): void {
 
   update: boolean= false;
   isActivitySelected: boolean = false;
+  isCommentSelected: boolean = false;
+
 
   ngOnInit() {
     if (this.user) {
@@ -80,6 +88,7 @@ public updateFormWithUserData(user: User): void {
     } 
     
     this.activities = this.user?.activities ?? [];
+    this.comments = this.user?.comments ?? [];
   }
  
   onActivityUpdated(activity: Activity): void {
@@ -88,6 +97,14 @@ public updateFormWithUserData(user: User): void {
 
   showActivity(activity: Activity): void {
     this.showActivityDetails.emit(activity);
+  }
+
+  onCommentUpdated(comment: Comment): void {
+    this.commentUpdated = comment;
+  }
+
+  showComment(comment: Comment): void {
+    this.showCommentDetails.emit(comment);
   }
 
   updateEdit(state: boolean) {
@@ -134,7 +151,7 @@ public updateFormWithUserData(user: User): void {
 
   deselectActivity(): void {
     if (this.selectedActivity && this.activityUpdated) {
-      const index = this.activities.findIndex(post => post._id === this.selectedActivity!._id);
+      const index = this.activities.findIndex(activity => activity._id === this.selectedActivity!._id);
       if (index !== -1) {
         this.activities[index] = this.activityUpdated;
       }
@@ -142,7 +159,26 @@ public updateFormWithUserData(user: User): void {
      
     this.selectedActivity = undefined;
     this.isActivitySelected = false;
-    this.activitySelected.emit(false); // Emitir false cuando se deselecciona un usuario
+    this.activitySelected.emit(false); 
   }
+
+  onSelectComment(comment: Comment): void {
+    this.selectedComment = comment;
+    this.isCommentSelected = true;
+    this.commentSelected.emit(true);
+  }
+
+  deselectComment(): void {
+    if (this.selectedComment && this.commentUpdated) {
+      const index = this.comments.findIndex(comment => comment._id === this.selectedComment!._id);
+      if (index !== -1) {
+        this.comments[index] = this.commentUpdated;
+      }
+    }
+     
+    this.selectedComment = undefined;
+    this.isCommentSelected = false;
+    this.commentSelected.emit(false); 
+  } 
 
 }

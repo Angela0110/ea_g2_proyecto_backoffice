@@ -7,6 +7,6 @@ export interface Activity {
     description: string;
     rate?: number;
     owner: User;
-    comments?: User;
+    comments?: [];
     active: boolean;
   }

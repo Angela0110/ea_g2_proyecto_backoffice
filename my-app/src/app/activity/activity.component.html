@@ -1,5 +1,34 @@
 <h2>My Activities</h2>
 
+<button type="button" *ngIf="!showAddActivityForm && !selectedActivity && !isActivitySelected" (click)="showAddActivity(true)">Add new activity</button>
+<button type="button" *ngIf="showAddActivityForm && !selectedActivity && !isActivitySelected" (click)="showAddActivity(false)">-</button>
+
+<div *ngIf="showAddActivityForm && !selectedActivity && !isActivitySelected">
+  <form [formGroup]="newActivityForm" (ngSubmit)="postActivity()">
+  
+    <label for="name">Name:</label>
+    <input type="name" id="name" formControlName="name"><br>
+    <div *ngIf="newActivityForm.get('name')?.invalid && (newActivityForm.get('name')?.dirty || newActivityForm.get('name')?.touched)">
+      <div *ngIf="newActivityForm.get('name')?.errors?.['required']" class="required-error">Name es requerido.</div>
+    </div>
+    
+    <label for="description">Description:</label>
+    <input type="description" id="description" formControlName="description"><br>
+    <div *ngIf="newActivityForm.get('description')?.invalid && (newActivityForm.get('description')?.dirty || newActivityForm.get('description')?.touched)">
+      <div *ngIf="newActivityForm.get('description')?.errors?.['required']" class="required-error">Description es requerido.</div>
+    </div>
+    
+    <label for="owner">Owner:</label>
+    <input type="owner" id="owner" formControlName="owner"><br>
+    <div *ngIf="newActivityForm.get('owner')?.invalid && (newActivityForm.get('owner')?.dirty || newActivityForm.get('owner')?.touched)">
+      <div *ngIf="newActivityForm.get('owner')?.errors?.['required']" class="required-error">Owner es requerido.</div>
+    </div>
+    
+    
+    <button type="submit" [disabled]="newActivityForm.invalid">Add Activity</button> 
+  </form>
+</div>
+
 <ul class="users" *ngIf="!selectedActivity">
   <li *ngFor="let activity of activities">
     <button type="button" (click)="onSelect(activity)">

@@ -4,12 +4,14 @@ import { Activity } from '../models/activity';
 import { ActivityService } from '../services/activity.service';
 import { ActivityDetailsComponent } from '../activity-details/activity-details.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-activity',
   templateUrl: './activity.component.html',
   styleUrls: ['./activity.component.css'],
-  imports: [ NgIf, UpperCasePipe, CommonModule, ActivityDetailsComponent],
+  imports: [ NgIf, UpperCasePipe, CommonModule, ActivityDetailsComponent, ReactiveFormsModule],
   standalone: true,
 })
 export class ActivityComponent {
@@ -18,6 +20,8 @@ export class ActivityComponent {
 
   activities: Activity[] = [];
 
+  newActivityForm: FormGroup;
+
   selectedActivity?: Activity;
   activityUpdated?: Activity;
   showAddActivityForm: boolean = false;
@@ -25,13 +29,17 @@ export class ActivityComponent {
 
   constructor( public activityService: ActivityService, private formBuilder: FormBuilder // Inyectamos el FormBuilder
   ) {
-   
+    this.newActivityForm = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      owner: ['', [Validators.required]]
+    });
   }
 
   ngOnInit(): void {
     this.activityService.getActivities().subscribe (activities =>{
       this.activities = activities;
-      console.log("ujoik"+activities)
+      console.log(activities);
     })
   }
 
@@ -59,24 +67,24 @@ export class ActivityComponent {
   }
 
 
- /*  postActivity(): void{
+  postActivity(): void{
 
     if (this.newActivityForm.valid) {
       console.log(this.newActivityForm.value)
       this.activityService.postActivity(this.newActivityForm.value).subscribe((res: any) => {
-        console.log("Usuario añadido!!!", res.user);
-        this.activities.push(res.user);
+        console.log("Actividad añadido!!!", res.activity);
+        this.activities.push(res.activity);
         this.newActivityForm.reset();
       });
     } else {
       console.error("El formulario no es válido. No se puede agregar el usuario.");
     }
-  }  */
+  }  
 
- /*  showAddActivity(state: boolean) {
+  showAddActivity(state: boolean) {
     this.showAddActivityForm = state;
     console.log("Cambio modo edición/lectura", this.showAddActivityForm);
-  } */
+  } 
 
   onActivitySelected(selected: boolean): void {
     this.isActivitySelected = selected;

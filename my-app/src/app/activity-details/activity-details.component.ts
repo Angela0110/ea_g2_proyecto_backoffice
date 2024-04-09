@@ -35,33 +35,44 @@ export class ActivityDetailsComponent {
   'gender':''
   };
 
-  activities: Activity[] = [];
-
   editActivity: Activity=   {  '_id': this.user._id,
   'name': '',
   'description': '',
   'rate': 0,
   'owner': this.user,
-  'comments': this.user,
-  'active': false,
+  'comments': [],
+  'active': true,
 };
 
 
 constructor(public activityService: ActivityService, private formBuilder: FormBuilder) {
   this.editActivityForm = this.formBuilder.group({
-    //title: ['', [Validators.required]],
-    //content: ['', [Validators.required]],
-    //author: ['', [Validators.required]]
+    name: ['', [Validators.required]],
+    description: ['', [Validators.required]]
   });
 
   // Comprobar si hay un usuario recibido como entrada y actualizar el formulario si es necesario
 }
 
+refreshActivity(): void {
+  this.activityService.getActivity(this.activity?._id!).subscribe((res: any) => {
+    // Actualizar actividad en el componente
+    this.activity = res.data;
+    this.rating = +this.activity!.rate!.toFixed(1);
+
+    this.activityUpdated.emit(this.activity);
+
+    // Actualizar el formulario con los datos de la actividad actualizada
+    this.updateFormWithActivityData(this.activity!);
+  });
+}
+
 public updateFormWithActivityData(activity: Activity): void {
   // Actualizar los valores del formulario con los datos del usuario
   this.editActivityForm.patchValue({
-    _id: activity._id,
+    //_id: activity._id,
     name: activity.name,
+    description: activity.description
   });
 }
 
@@ -78,7 +89,8 @@ public updateFormWithActivityData(activity: Activity): void {
     if (this.activity?.owner) {
       // Asigna this.activity.owner a this.user solo si this.activity.owner no es undefined
       this.user = this.activity.owner;
-  }  }
+    }  
+  }
  
   updateEdit(state: boolean) {
     this.update = state;
@@ -90,29 +102,23 @@ public updateFormWithActivityData(activity: Activity): void {
     const formData = this.editActivityForm.value;
     this.editActivity = {
       _id: this.activity?._id!, // Usamos el _id de la activity actual
-      //author: formData.author,
-      //title: formData.title,
-      //content: formData.content
-      name: formData.content,
-      description: formData.content,
-      rate: formData.number,
-      owner: formData.author,
-      comments: formData.content,
-      active: formData.boolean
+      name: formData.name,
+      description: formData.description,
+      rate: formData.rate,
+      owner: formData.owner,
+      comments: formData.comments,
+      active: formData.active
     };
 
     this.activityService.updateActivity(this.editActivity).subscribe (editActivity =>{
       this.activity =   {
-        _id: this.activity?._id!, // Usamos el _id de la activity actual
-        //author: formData.author,
-        //title: formData.title,
-        //content: formData.content
-        name: formData.content,
-        description: formData.content,
-        rate: formData.number,
-        owner: formData.author,
-        comments: formData.content,
-        active: formData.boolean
+        '_id': this.activity?._id!, // Usamos el _id de la activity actual
+        'name': this.editActivity.name,
+        'description': this.editActivity.description,
+        'rate': this.editActivity.rate,
+        'owner': this.editActivity.owner,
+        'comments': this.editActivity.comments,
+        'active': this.editActivity.active
     } 
       this.activityUpdated.emit(this.editActivity);
     });
