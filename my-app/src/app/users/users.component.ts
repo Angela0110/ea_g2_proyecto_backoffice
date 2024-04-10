@@ -20,6 +20,12 @@ export class UsersComponent {
   newUserForm: FormGroup;
 
   users: User[] = [];
+  previous = "<";
+  next = ">";
+  first_page = true;
+  last_page = false;
+  user_length = 0;
+  page = 0;
 
   selectedUser?: User;
   userUpdated?: User;
@@ -46,6 +52,44 @@ export class UsersComponent {
       console.log(users);
     })
   }
+  userLength(): void {
+    this.userService.commentLength(this.activity!).subscribe (length =>{
+      this.user_length = length;
+      if(this.user_length <= (this.page!*5)+5){
+        this.last_page = true
+      }
+    })
+  }
+
+  nextPage(): void {
+    this.commentLength();
+    this.page!++;
+    if(this.comment_length <= this.page!*5+5){
+      this.last_page = true
+    }
+    this.first_page = false;
+    this.getUser(this.page);
+  }
+
+  previousPage(): void{
+    this.commentLength();
+    this.page!--;
+    if(this.page == 0){
+      this.first_page = true;
+    }
+    if(this.comment_length >= this.page!*5+5){
+      this.last_page = false;
+    }
+    this.getUser(this.page);
+  }
+
+  getUser(page: any): void{
+    this.userService.getUsers().subscribe (users =>{
+      console.log(users);
+      this.users = users;
+    })
+  }
+
 
   @Output() userSelected = new EventEmitter<boolean>();
 

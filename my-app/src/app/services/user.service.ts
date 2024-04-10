@@ -13,6 +13,10 @@ export class UserService {
   getUsers() {
     return this.http.get<User[]>('http://127.0.0.1:3000/user');
   }
+  getUser(page: number) {
+    return this.http.get<User[]>('http://127.0.0.1:3000/user/'+ page);
+  }
+  
 
   postUsers(newUser : User |undefined) {
     return this.http.post('http://127.0.0.1:3000/user', newUser);
