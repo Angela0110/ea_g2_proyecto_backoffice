@@ -7,11 +7,12 @@ import { UserService } from '../services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgIf, NgFor, UpperCasePipe} from '@angular/common';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [FormsModule, NgIf, NgFor, UpperCasePipe, UserDetailsComponent, ReactiveFormsModule],
+  imports: [FormsModule, NgIf, NgFor, UpperCasePipe, UserDetailsComponent, ReactiveFormsModule, NgxPaginationModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
@@ -20,6 +21,7 @@ export class UsersComponent {
   newUserForm: FormGroup;
 
   users: User[] = [];
+  page!: number;
 
   selectedUser?: User;
   userUpdated?: User;

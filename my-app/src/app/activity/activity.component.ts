@@ -5,13 +5,14 @@ import { ActivityService } from '../services/activity.service';
 import { ActivityDetailsComponent } from '../activity-details/activity-details.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @Component({
   selector: 'app-activity',
   templateUrl: './activity.component.html',
   styleUrls: ['./activity.component.css'],
-  imports: [ NgIf, UpperCasePipe, CommonModule, ActivityDetailsComponent, ReactiveFormsModule],
+  imports: [ NgIf, UpperCasePipe, CommonModule, ActivityDetailsComponent, ReactiveFormsModule, NgxPaginationModule],
   standalone: true,
 })
 export class ActivityComponent {
@@ -19,6 +20,7 @@ export class ActivityComponent {
   @Output() goBack = new EventEmitter<void>();
 
   activities: Activity[] = [];
+  page!: number;
 
   newActivityForm: FormGroup;
 

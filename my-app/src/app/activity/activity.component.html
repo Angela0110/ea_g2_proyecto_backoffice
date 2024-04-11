@@ -30,7 +30,7 @@
 </div>
 
 <ul class="users" *ngIf="!selectedActivity">
-  <li *ngFor="let activity of activities">
+  <li *ngFor="let activity of activities| paginate: { itemsPerPage: 5, currentPage: page }">
     <button type="button" (click)="onSelect(activity)">
       <span  class="name">{{activity.name}}</span>
     </button>
@@ -38,4 +38,4 @@
 </ul>
 
 <app-activity-details *ngIf="selectedActivity" [activity]="selectedActivity" (deselect)="deselectActivity()" (activityUpdated)="onActivityUpdated($event)"></app-activity-details> 
-
+<pagination-controls (pageChange)="page = $event" nextLabel="Next" previousLabel="Previous"></pagination-controls>

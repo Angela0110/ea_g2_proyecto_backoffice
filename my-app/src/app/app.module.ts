@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <-- NgModel lives here
 
 import { HttpClientModule } from '@angular/common/http';
-
+import {NgxPaginationModule} from 'ngx-pagination';
 import { NgIf, UpperCasePipe, CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -18,7 +18,8 @@ import { RouterModule } from '@angular/router';
         FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
-        CommonModule  
+        CommonModule,
+        NgxPaginationModule  
     ]
 })
 export class AppModule { }
