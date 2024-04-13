@@ -1,3 +1,5 @@
+import { ObjectId } from "mongoose";
+
 export interface User {
     _id: string;
     name: {
@@ -9,5 +11,7 @@ export interface User {
     phone_number:string,
     gender:string,
     activities?: [],
-    comments?: []
+    comments?: [],
+    /* totalPages?:number,
+    totalUsers?: number, */
   }

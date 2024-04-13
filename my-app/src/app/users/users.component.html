@@ -50,7 +50,7 @@
 </div>
 
 <ul class="users" *ngIf="!selectedUser">
-  <li *ngFor="let user of users| paginate: { itemsPerPage: 5, currentPage: page }">
+  <li *ngFor="let user of users| paginate: { itemsPerPage: limit, currentPage: page, totalItems: total }">
     <button type="button" (click)="onSelect(user)">
       <span  class="name">{{user.name.first_name}} {{user.name.middle_name}} {{user.name.last_name}}</span>
     </button>
@@ -59,4 +59,8 @@
 
 <app-user-details *ngIf="selectedUser" [user]="selectedUser" (deselect)="deselectUser()" (userUpdated)="onUserUpdated($event)"></app-user-details> 
 
-<pagination-controls (pageChange)="page = $event" nextLabel="Next" previousLabel="Previous"></pagination-controls>
+<pagination-controls (pageChange)="handlePageChange($event)" nextLabel="Next" previousLabel="Previous"></pagination-controls>
+
+<div class="mt-3">  Items per Page: <select (change)="handleLimitChange($event)"><option *ngFor="let limitUser of limitUsers" [value]="limitUser">{{ limitUser }}</option>
+  </select>
+</div>

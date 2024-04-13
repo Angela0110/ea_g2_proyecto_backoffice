@@ -7,7 +7,7 @@ import { UserService } from '../services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgIf, NgFor, UpperCasePipe} from '@angular/common';
-import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxPaginationModule, PaginatePipe, PaginationControlsComponent, PaginationControlsDirective, PaginationService,PaginatePipeArgs,Page, PaginationInstance,PipeState, } from 'ngx-pagination';
 
 @Component({
   selector: 'app-users',
@@ -17,11 +17,24 @@ import { NgxPaginationModule } from 'ngx-pagination';
   styleUrl: './users.component.css'
 })
 export class UsersComponent {
+@Input() totalUsers:any;
+@Input()currentPage:any;
+@Input()limit:any=2;
+@Input()total:any;
+  @Output()
+  pageChange!: EventEmitter<number>;
+totalPages:any;
+
 
   newUserForm: FormGroup;
-
   users: User[] = [];
-  page!: number;
+  user:any;
+ 
+
+    count:number=0;
+  page: number=1 ;
+  limitUsers = [2,3, 6, 9];
+  
 
   selectedUser?: User;
   userUpdated?: User;
@@ -43,10 +56,35 @@ export class UsersComponent {
   }
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe (users =>{
-      this.users = users;
-      console.log(users);
+    
+    this.userService.getUsers(this.page, this.limit).subscribe (users =>{
+      console.log("users",users);
+    this.user=users;
+    this.totalPages=this.user.totalPages;
+    this.total=this.user.totalUser;
+    this.users=this.user.users
+      
+      //this.count=users.totalPages;
+      //this.totalUsers=users.totalUsers;
+      console.log(this.count,this.page);
+      console.log(this.total,this.totalUsers);
+      console.log("estoy dentro",this.users);
+      
+    
     })
+  }
+
+  handlePageChange(event: number): void {
+    console.log(this.count);
+    this.page = event;
+    console.log(this.page);
+    this.ngOnInit();
+  }
+
+  handleLimitChange(event: any): void {
+    this.limit = event.target.value;
+    this.page = 1;
+    this.ngOnInit();
   }
 
   @Output() userSelected = new EventEmitter<boolean>();

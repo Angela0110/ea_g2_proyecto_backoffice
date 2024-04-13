@@ -18,9 +18,17 @@ import { NgxPaginationModule } from 'ngx-pagination';
 export class ActivityComponent {
   @Input() activity?: Activity;
   @Output() goBack = new EventEmitter<void>();
-
+  @Input() totalActivities:any;
+@Input()currentPage:any;
+@Input()limit:any=2;
+@Input()total:any;
+  @Output()
+  pageChange!: EventEmitter<number>;
+  totalPages:any;
   activities: Activity[] = [];
-  page!: number;
+  page: number=1;
+  action:any;
+  limitActivities = [2,3, 6, 9];
 
   newActivityForm: FormGroup;
 
@@ -39,11 +47,30 @@ export class ActivityComponent {
   }
 
   ngOnInit(): void {
-    this.activityService.getActivities().subscribe (activities =>{
-      this.activities = activities;
+    this.activityService.getActivities(this.page,this.limit).subscribe (activities =>{
+       this.action= activities;
+       this.totalPages=this.action.totalPages;
+       this.total=this.action.totalActivity;
+       this.activities=this.action.activities
+       console.log(this.activities);
+
+       
       console.log(activities);
     })
   }
+  handlePageChange(event: number): void {
+
+    this.page = event;
+    console.log(this.page);
+    this.ngOnInit();
+  }
+
+  handleLimitChange(event: any): void {
+    this.limit = event.target.value;
+    this.page = 1;
+    this.ngOnInit();
+  }
+
 
   @Output() activitySelected = new EventEmitter<boolean>();
 
