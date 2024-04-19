@@ -31,9 +31,9 @@ totalPages:any;
   user:any;
  
 
-    count:number=0;
+  count:number=0;
   page: number=1 ;
-  limitUsers = [2,3, 6, 9];
+  limitUsers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // Limit to 10 users
   
 
   selectedUser?: User;
