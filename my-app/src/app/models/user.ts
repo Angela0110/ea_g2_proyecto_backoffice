@@ -10,6 +10,4 @@ export interface User {
     gender:string,
     activities?: [],
     comments?: [],
-    /* totalPages?:number,
-    totalUsers?: number, */
   }

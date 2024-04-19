@@ -19,16 +19,16 @@ export class ActivityComponent {
   @Input() activity?: Activity;
   @Output() goBack = new EventEmitter<void>();
   @Input() totalActivities:any;
-@Input()currentPage:any;
-@Input()limit:any=2;
-@Input()total:any;
+  @Input()currentPage:any;
+  @Input()limit:any=2;
+  @Input()total:any;
   @Output()
   pageChange!: EventEmitter<number>;
   totalPages:any;
   activities: Activity[] = [];
   page: number=1;
   action:any;
-  limitActivities = [2,3, 6, 9];
+  limitActivities = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   newActivityForm: FormGroup;
 
@@ -106,7 +106,7 @@ export class ActivityComponent {
         this.newActivityForm.reset();
       });
     } else {
-      console.error("El formulario no es válido. No se puede agregar el usuario.");
+      console.error("El formulario no es válido. No se puede agregar el usuario."); // Sería usuario o actividad????
     }
   }  
 

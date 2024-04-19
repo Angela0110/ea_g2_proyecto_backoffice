@@ -40,7 +40,7 @@ export class UserDetailsComponent {
    'middle_name':'',
    'last_name': '',
  },
- 'email':'@gmail.com',
+ 'email':'@gmail.com', // El @gmail.com para que sirve? Si no introduces un usuario con el @ no te deja añadirlo directamente.
  'phone_number':'',
  'gender':''
 };
