@@ -24,14 +24,11 @@ export class CommentDetailsComponent {
   CommentID?: String;
 
   user: User =  {  '_id': '',
-  'name': {
-   'first_name': '',
-   'middle_name':'',
-   'last_name': '',
- },
+  'name': '',
   'email':'@gmail.com',
   'phone_number':'',
-  'gender':''
+  'gender':'',
+  'birthday': new Date()
   };
 
   activity: Activity=   {  '_id': '',
@@ -39,7 +36,9 @@ export class CommentDetailsComponent {
   'description': '',
   'rate': 0,
   'owner': this.user,
+  'listUsers': [],
   'comments': [],
+  'date': new Date(),
   'active': true
   };
 

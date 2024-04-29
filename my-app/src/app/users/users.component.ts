@@ -44,14 +44,11 @@ totalPages:any;
   constructor( public userService: UserService, private formBuilder: FormBuilder // Inyectamos el FormBuilder
   ) {
     this.newUserForm = this.formBuilder.group({
-      name: this.formBuilder.group({
-        first_name: ['', [Validators.required]],
-        middle_name: ['', [Validators.required]],
-        last_name: ['', [Validators.required]]
-      }),
+      name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       phone_number: ['', [Validators.required]],
-      gender: ['', [Validators.required]]
+      gender: ['', [Validators.required]],
+      birthday: ['', [Validators.required]]
     });
   }
 

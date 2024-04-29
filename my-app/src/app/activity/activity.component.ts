@@ -42,7 +42,8 @@ export class ActivityComponent {
     this.newActivityForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
-      owner: ['', [Validators.required]]
+      owner: ['', [Validators.required]],
+      date: ['', [Validators.required]]
     });
   }
 

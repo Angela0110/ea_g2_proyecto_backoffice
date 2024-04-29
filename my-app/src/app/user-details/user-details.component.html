@@ -4,24 +4,10 @@
 <div *ngIf="update && !isActivitySelected && !isCommentSelected">
   <form [formGroup]="editUserForm" (ngSubmit)="updateUser()">
 
-    <div formGroupName="name">
-      <label for="first_name" >First Name:</label>
-      <input type="text" id="first_name" formControlName="first_name"><br>
-      <div *ngIf="editUserForm.get('name.first_name')?.invalid && (editUserForm.get('name.first_name')?.dirty || editUserForm.get('name.first_name')?.touched)">
-        <div *ngIf="editUserForm.get('name.first_name')?.errors?.['required']" class="required-error">First Name es obligatorio.</div>
-      </div>
-    
-      <label for="middle_name">Middle Name:</label>
-      <input type="text" id="middle_name" formControlName="middle_name"><br>
-      <div *ngIf="editUserForm.get('name.middle_name')?.invalid && (editUserForm.get('name.middle_name')?.dirty || editUserForm.get('name.middle_name')?.touched)">
-        <div *ngIf="editUserForm.get('name.middle_name')?.errors?.['required']" class="required-error">Middle Name es obligatorio.</div>
-      </div>
-    
-      <label for="last_name">Last Name:</label>
-      <input type="text" id="last_name" formControlName="last_name"><br>
-      <div *ngIf="editUserForm.get('name.last_name')?.invalid && (editUserForm.get('name.last_name')?.dirty || editUserForm.get('name.last_name')?.touched)">
-        <div *ngIf="editUserForm.get('name.last_name')?.errors?.['required']" class="required-error">Last Name es obligatorio.</div>
-      </div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" formControlName="name"><br>
+    <div *ngIf="editUserForm.get('name')?.invalid && (editUserForm.get('name')?.dirty || editUserForm.get('name')?.touched)">
+      <div *ngIf="editUserForm.get('name')?.errors?.['required']" class="required-error">Name es obligatorio.</div>
     </div>
     
     <label for="email">Email:</label>
@@ -42,6 +28,12 @@
     <div *ngIf="editUserForm.get('gender')?.invalid && (editUserForm.get('gender')?.dirty || editUserForm.get('gender')?.touched)">
       <div *ngIf="editUserForm.get('gender')?.errors?.['required']" class="required-error">Gender es obligatorio.</div>
     </div>
+
+    <label for="birthday">Birthday:</label>
+    <input type="text" id="birthday" formControlName="birthday"><br>
+    <div *ngIf="editUserForm.get('birthday')?.invalid && (editUserForm.get('birthday')?.dirty || editUserForm.get('birthday')?.touched)">
+      <div *ngIf="editUserForm.get('birthday')?.errors?.['required']" class="required-error">Birthday es obligatorio.</div>
+    </div>
     
     <button *ngIf="update" type="submit" [disabled]="editUserForm.invalid">Update User Details</button> 
 
@@ -49,13 +41,23 @@
 </div>
 
 <div *ngIf="user && !isActivitySelected && !isCommentSelected">
-  <h2>{{user.name.first_name}} {{user.name.middle_name}} {{user.name.last_name}}</h2>
+  <h2>{{user.name}}</h2>
   <div><span>ID:</span> {{user._id}}</div>
   <div><span>Email:</span> {{user.email}}</div>
   <div><span>Phone Number:</span> {{user.phone_number}}</div>
   <div><span>Gender:</span> {{user.gender}}</div>
-  <div><span>Activities:</span> 
+  <div><span>Birthday:</span> {{user.birthday}}</div>
+  <div><span>My activities:</span> 
     <div *ngIf="user.activities" class="activity">
+      <li *ngFor="let activity of activities">
+        <div class="custom-button" type="button" (click)="onSelect(activity)">
+          <span> {{activity.name}} </span>
+        </div>
+      </li>
+    </div>
+  </div> 
+  <div><span>List Activities:</span> 
+    <div *ngIf="user.listActivities" class="activity">
       <li *ngFor="let activity of activities">
         <div class="custom-button" type="button" (click)="onSelect(activity)">
           <span> {{activity.name}} </span>

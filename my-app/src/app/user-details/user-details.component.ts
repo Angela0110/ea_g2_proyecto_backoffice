@@ -33,16 +33,14 @@ export class UserDetailsComponent {
 
   activities: Activity[] = [];
   comments: Comment[] = [];
+  listActivities: Activity[] = [];
 
   editUser: User=   {  '_id': '',
-  'name': {
-   'first_name': '',
-   'middle_name':'',
-   'last_name': '',
- },
- 'email':'@gmail.com', // El @gmail.com para que sirve? Si no introduces un usuario con el @ no te deja añadirlo directamente.
+  'name': '',
+ 'email':'@gmail.com', 
  'phone_number':'',
- 'gender':''
+ 'gender':'',
+ 'birthday': new Date()
 };
 
   showActivityDetails: any;
@@ -50,14 +48,11 @@ export class UserDetailsComponent {
 
 constructor(public userService: UserService, public activityService: ActivityService, private formBuilder: FormBuilder) {
   this.editUserForm = this.formBuilder.group({
-    name: this.formBuilder.group({
-      first_name: ['', [Validators.required]],
-      middle_name: ['', [Validators.required]],
-      last_name: ['', [Validators.required]]
-    }),
+    name: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     phone_number: ['', [Validators.required]],
-    gender: ['', [Validators.required]]
+    gender: ['', [Validators.required]],
+    birthday: ['', [Validators.required]]
   });
 
   // Comprobar si hay un usuario recibido como entrada y actualizar el formulario si es necesario
@@ -66,14 +61,11 @@ constructor(public userService: UserService, public activityService: ActivitySer
 public updateFormWithUserData(user: User): void {
   // Actualizar los valores del formulario con los datos del usuario
   this.editUserForm.patchValue({
-    name: {
-      first_name: user.name.first_name,
-      middle_name: user.name.middle_name,
-      last_name: user.name.last_name
-    },
+    name: user.name,
     email: user.email,
     phone_number: user.phone_number,
-    gender: user.gender
+    gender: user.gender,
+    birthday: user.birthday
   });
 }
 
@@ -89,6 +81,7 @@ public updateFormWithUserData(user: User): void {
     
     this.activities = this.user?.activities ?? [];
     this.comments = this.user?.comments ?? [];
+    this.listActivities = this.user?.listActivities ?? [];
   }
  
   onActivityUpdated(activity: Activity): void {
@@ -117,27 +110,21 @@ public updateFormWithUserData(user: User): void {
     const formData = this.editUserForm.value;
     this.editUser = {
       _id: this.user?._id!, // Usamos el _id del usuario actual
-      name: {
-        first_name: formData.name.first_name,
-        middle_name: formData.name.middle_name,
-        last_name: formData.name.last_name
-      },
+      name: formData.name,
       email: formData.email,
       phone_number: formData.phone_number,
-      gender: formData.gender
+      gender: formData.gender,
+      birthday: formData.birthday
     };
 
     this.userService.updateUser(this.editUser).subscribe (editUser =>{
       this.user =   {
         '_id': this.editUser?._id!,
-      'name': {
-       'first_name': this.editUser?.name.first_name!,
-       'middle_name': this.editUser?.name.middle_name!,
-       'last_name': this.editUser?.name.last_name!,
-     },
+      'name': this.editUser?.name!,
      'email':this.editUser?.email!,
      'phone_number':this.editUser?.phone_number!,
-     'gender': this.editUser?.gender! 
+     'gender': this.editUser?.gender!,
+     'birthday': this.editUser?.birthday!
     } 
       this.userUpdated.emit(this.editUser);
     });

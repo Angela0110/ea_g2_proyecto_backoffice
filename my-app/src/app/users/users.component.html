@@ -6,24 +6,10 @@
 <div *ngIf="showAddUserForm && !selectedUser && !isUserSelected">
   <form [formGroup]="newUserForm" (ngSubmit)="postUser()">
 
-    <div formGroupName="name">
-      <label for="first_name" >First Name:</label>
-      <input type="text" id="first_name" formControlName="first_name"><br>
-      <div *ngIf="newUserForm.get('name.first_name')?.invalid && (newUserForm.get('name.first_name')?.dirty || newUserForm.get('name.first_name')?.touched)">
-        <div *ngIf="newUserForm.get('name.first_name')?.errors?.['required']" class="required-error">First Name es obligatorio.</div>
-      </div>
-    
-      <label for="middle_name">Middle Name:</label>
-      <input type="text" id="middle_name" formControlName="middle_name"><br>
-      <div *ngIf="newUserForm.get('name.middle_name')?.invalid && (newUserForm.get('name.middle_name')?.dirty || newUserForm.get('name.middle_name')?.touched)">
-        <div *ngIf="newUserForm.get('name.middle_name')?.errors?.['required']" class="required-error">Middle Name es obligatorio.</div>
-      </div>
-    
-      <label for="last_name">Last Name:</label>
-      <input type="text" id="last_name" formControlName="last_name"><br>
-      <div *ngIf="newUserForm.get('name.last_name')?.invalid && (newUserForm.get('name.last_name')?.dirty || newUserForm.get('name.last_name')?.touched)">
-        <div *ngIf="newUserForm.get('name.last_name')?.errors?.['required']" class="required-error">Last Name es obligatorio.</div>
-      </div>
+    <label for="name">Name:</label>
+    <input type="text" id="name" formControlName="name"><br>
+    <div *ngIf="newUserForm.get('name')?.invalid && (newUserForm.get('name')?.dirty || newUserForm.get('name')?.touched)">
+      <div *ngIf="newUserForm.get('name')?.errors?.['required']" class="required-error">Name es obligatorio.</div>
     </div>
     
     <label for="email">Email:</label>
@@ -44,6 +30,12 @@
     <div *ngIf="newUserForm.get('gender')?.invalid && (newUserForm.get('gender')?.dirty || newUserForm.get('gender')?.touched)">
       <div *ngIf="newUserForm.get('gender')?.errors?.['required']" class="required-error">Gender es obligatorio.</div>
     </div>
+
+    <label for="birthday">Birthday:</label>
+    <input type="text" id="birthday" formControlName="birthday"><br>
+    <div *ngIf="newUserForm.get('birthday')?.invalid && (newUserForm.get('birthday')?.dirty || newUserForm.get('birthday')?.touched)">
+      <div *ngIf="newUserForm.get('birthday')?.errors?.['required']" class="required-error">Birthday es obligatorio.</div>
+    </div>
     
     <button type="submit" [disabled]="newUserForm.invalid">Add User</button> 
   </form>
@@ -52,7 +44,7 @@
 <ul class="users" *ngIf="!selectedUser">
   <li *ngFor="let user of users| paginate: { itemsPerPage: limit, currentPage: page, totalItems: total }">
     <button type="button" (click)="onSelect(user)">
-      <span  class="name">{{user.name.first_name}} {{user.name.middle_name}} {{user.name.last_name}}</span>
+      <span  class="name">{{user.name}}</span>
     </button>
   </li>
 </ul>

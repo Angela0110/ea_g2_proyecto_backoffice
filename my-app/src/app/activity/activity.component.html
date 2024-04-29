@@ -23,6 +23,12 @@
     <div *ngIf="newActivityForm.get('owner')?.invalid && (newActivityForm.get('owner')?.dirty || newActivityForm.get('owner')?.touched)">
       <div *ngIf="newActivityForm.get('owner')?.errors?.['required']" class="required-error">Owner es requerido.</div>
     </div>
+
+    <label for="date">Date:</label>
+    <input type="date" id="date" formControlName="date"><br>
+    <div *ngIf="newActivityForm.get('date')?.invalid && (newActivityForm.get('date')?.dirty || newActivityForm.get('date')?.touched)">
+      <div *ngIf="newActivityForm.get('date')?.errors?.['required']" class="required-error">Date es requerido.</div>
+    </div>
     
     
     <button type="submit" [disabled]="newActivityForm.invalid">Add Activity</button> 

@@ -15,6 +15,12 @@
     <div *ngIf="editActivityForm.get('description')?.invalid && (editActivityForm.get('description')?.dirty || editActivityForm.get('description')?.touched)">
       <div *ngIf="editActivityForm.get('description')?.errors?.['required']" class="required-error">Description es obligatorio.</div>
     </div>
+
+    <label for="date">Date:</label>
+    <input type="text" id="date" formControlName="date"><br>
+    <div *ngIf="editActivityForm.get('date')?.invalid && (editActivityForm.get('date')?.dirty || editActivityForm.get('date')?.touched)">
+      <div *ngIf="editActivityForm.get('date')?.errors?.['required']" class="required-error">Date es obligatorio.</div>
+    </div>
       
     <button *ngIf="update" type="submit" [disabled]="editActivityForm.invalid">Update Activity</button> 
 
@@ -26,15 +32,23 @@
   <div><span>ID:</span> {{activity._id}}</div>
   <div><span>Description:</span> {{activity.description}}</div>
   <div><span>{{rating}} ☆</span></div>
-  <div *ngIf="user && user.name?.first_name"><span>Owner:</span> 
+  <div><span>Date:</span> {{activity.date}}</div>
+  <div *ngIf="user"><span>Owner:</span> 
     <div class="author-details">
       <div><span>ID:</span> {{user._id}}</div>
-      <div><span>Name:</span> {{user.name.first_name}} {{user.name.middle_name}} {{user.name.last_name}}</div>
+      <div><span>Name:</span> {{user.name}}</div>
       <div><span>Email:</span> {{user.email}}</div>
       <div><span>Phone Number:</span> {{user.phone_number}}</div>
       <div><span>Gender:</span> {{user.gender}}</div>
     </div>
   </div>
+  <div><span>List Users:</span> 
+    <div *ngIf="activity.listUsers" class="activity">
+      <li *ngFor="let user of users">
+        <span> {{user.name}} </span>
+      </li>
+    </div>
+  </div> 
   
   <!-- <app-comments [activity] = "ActivityID"></app-comments> -->
   <app-comments [activity]="ActivityID" (commentsUpdate)="refreshActivity()"></app-comments>

@@ -24,15 +24,14 @@ export class ActivityDetailsComponent {
 
   rating:number = 0;
 
+  users : User[] = [];
+
   user: User =  {  '_id': '',
-  'name': {
-   'first_name': '',
-   'middle_name':'',
-   'last_name': '',
- },
+  'name': '',
   'email':'@gmail.com',
   'phone_number':'',
-  'gender':''
+  'gender':'',
+  'birthday': new Date()
   };
 
   editActivity: Activity=   {  '_id': this.user._id,
@@ -41,7 +40,9 @@ export class ActivityDetailsComponent {
   'rate': 0,
   'owner': this.user,
   'comments': [],
-  'active': true,
+  'listUsers': [],
+  'date': new Date(),
+  'active': true
 };
 
 
@@ -86,6 +87,10 @@ public updateFormWithActivityData(activity: Activity): void {
       this.updateFormWithActivityData(this.activity);
     };
 
+    if (this.activity?.listUsers) {
+      this.users = this.activity.listUsers;
+    } 
+
     if (this.activity?.owner) {
       // Asigna this.activity.owner a this.user solo si this.activity.owner no es undefined
       this.user = this.activity.owner;
@@ -107,6 +112,8 @@ public updateFormWithActivityData(activity: Activity): void {
       rate: formData.rate,
       owner: formData.owner,
       comments: formData.comments,
+      listUsers: formData.listUsers,
+      date: formData.data,
       active: formData.active
     };
 
@@ -118,6 +125,8 @@ public updateFormWithActivityData(activity: Activity): void {
         'rate': this.editActivity.rate,
         'owner': this.editActivity.owner,
         'comments': this.editActivity.comments,
+        'listUsers': this.editActivity.listUsers,
+        'date': this.editActivity.date,
         'active': this.editActivity.active
     } 
       this.activityUpdated.emit(this.editActivity);
