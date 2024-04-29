@@ -32,7 +32,7 @@
     </div>
 
     <label for="birthday">Birthday:</label>
-    <input type="text" id="birthday" formControlName="birthday"><br>
+    <input type="date" id="birthday" formControlName="birthday"><br>
     <div *ngIf="newUserForm.get('birthday')?.invalid && (newUserForm.get('birthday')?.dirty || newUserForm.get('birthday')?.touched)">
       <div *ngIf="newUserForm.get('birthday')?.errors?.['required']" class="required-error">Birthday es obligatorio.</div>
     </div>

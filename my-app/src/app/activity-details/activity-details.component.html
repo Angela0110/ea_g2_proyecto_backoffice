@@ -29,6 +29,7 @@
 
 <div *ngIf="activity">
   <h2>{{activity.name}} </h2>
+  <button (click)="openParticipateModal()">Participate</button>
   <div><span>ID:</span> {{activity._id}}</div>
   <div><span>Description:</span> {{activity.description}}</div>
   <div><span>{{rating}} ☆</span></div>
@@ -43,14 +44,22 @@
     </div>
   </div>
   <div><span>List Users:</span> 
-    <div *ngIf="activity.listUsers" class="activity">
+    <div *ngIf="activity.listUsers" class="user">
       <li *ngFor="let user of users">
         <span> {{user.name}} </span>
       </li>
     </div>
   </div> 
+
+  <div *ngIf="showParticipateModal">
+    <div class="modal">
+      <h3>Enter User ID</h3>
+      <input type="text" [(ngModel)]="userId">
+      <button (click)="participateActivity(userId!)">Submit</button>
+      <button (click)="closeParticipateModal()">Cancel</button>
+    </div>
+  </div>
   
-  <!-- <app-comments [activity] = "ActivityID"></app-comments> -->
   <app-comments [activity]="ActivityID" (commentsUpdate)="refreshActivity()"></app-comments>
 
   

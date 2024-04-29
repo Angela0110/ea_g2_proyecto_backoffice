@@ -22,7 +22,11 @@ export class ActivityDetailsComponent {
 
   ActivityID?: string;
 
+  showParticipateModal: boolean = false;
+
   rating:number = 0;
+
+  userId?: string;
 
   users : User[] = [];
 
@@ -62,6 +66,15 @@ refreshActivity(): void {
     this.rating = +this.activity!.rate!.toFixed(1);
 
     this.activityUpdated.emit(this.activity);
+    
+    if (this.activity?.listUsers) {
+      this.users = this.activity.listUsers;
+    } 
+
+    if (this.activity?.owner) {
+      // Asigna this.activity.owner a this.user solo si this.activity.owner no es undefined
+      this.user = this.activity.owner;
+    }  
 
     // Actualizar el formulario con los datos de la actividad actualizada
     this.updateFormWithActivityData(this.activity!);
@@ -82,19 +95,10 @@ public updateFormWithActivityData(activity: Activity): void {
 
   ngOnInit() {
     if (this.activity) {
-      this.rating = +this.activity.rate!.toFixed(1);
       this.ActivityID = this.activity._id;
-      this.updateFormWithActivityData(this.activity);
+      this.refreshActivity();
     };
 
-    if (this.activity?.listUsers) {
-      this.users = this.activity.listUsers;
-    } 
-
-    if (this.activity?.owner) {
-      // Asigna this.activity.owner a this.user solo si this.activity.owner no es undefined
-      this.user = this.activity.owner;
-    }  
   }
  
   updateEdit(state: boolean) {
@@ -132,5 +136,20 @@ public updateFormWithActivityData(activity: Activity): void {
       this.activityUpdated.emit(this.editActivity);
     });
   } 
+
+  participateActivity(userId: String): void {
+    this.activityService.participateActivity(userId, this.activity?._id!).subscribe((res: any) => {
+      this.refreshActivity();
+      this.closeParticipateModal(); // Close the modal after participating
+    });
+  }
+
+  openParticipateModal() {
+    this.showParticipateModal = true;
+  }
+
+  closeParticipateModal() {
+    this.showParticipateModal = false;
+  }
 
 }

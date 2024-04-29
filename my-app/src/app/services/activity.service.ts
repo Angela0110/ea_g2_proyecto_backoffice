@@ -25,4 +25,8 @@ export class ActivityService {
     return this.http.put('http://127.0.0.1:3000/activity/'+ editActivity._id, editActivity);
   }
 
+  participateActivity(userId : String, activityId : String){
+    return this.http.put('http://127.0.0.1:3000/activity/'+ userId + '/' + activityId, null);
+  }
+
 }
