@@ -35,7 +35,8 @@ export class ActivityDetailsComponent {
   'email':'@gmail.com',
   'phone_number':'',
   'gender':'',
-  'birthday': new Date()
+  'birthday': new Date(),
+  'password': ''
   };
 
   editActivity: Activity=   {  '_id': this.user._id,

@@ -28,7 +28,8 @@ export class CommentDetailsComponent {
   'email':'@gmail.com',
   'phone_number':'',
   'gender':'',
-  'birthday': new Date()
+  'birthday': new Date(),
+  'password':''
   };
 
   activity: Activity=   {  '_id': '',

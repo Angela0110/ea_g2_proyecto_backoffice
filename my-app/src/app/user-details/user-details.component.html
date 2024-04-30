@@ -34,6 +34,12 @@
     <div *ngIf="editUserForm.get('birthday')?.invalid && (editUserForm.get('birthday')?.dirty || editUserForm.get('birthday')?.touched)">
       <div *ngIf="editUserForm.get('birthday')?.errors?.['required']" class="required-error">Birthday es obligatorio.</div>
     </div>
+
+    <label for="password">Birthday:</label>
+    <input type="password" id="password" formControlName="password"><br>
+    <div *ngIf="editUserForm.get('password')?.invalid && (editUserForm.get('password')?.dirty || editUserForm.get('password')?.touched)">
+      <div *ngIf="editUserForm.get('password')?.errors?.['required']" class="required-error">Password es obligatorio.</div>
+    </div>
     
     <button *ngIf="update" type="submit" [disabled]="editUserForm.invalid">Update User Details</button> 
 
@@ -47,6 +53,7 @@
   <div><span>Phone Number:</span> {{user.phone_number}}</div>
   <div><span>Gender:</span> {{user.gender}}</div>
   <div><span>Birthday:</span> {{user.birthday}}</div>
+  <div><span>Password:</span> {{user.password}}</div>
   <div><span>My activities:</span> 
     <div *ngIf="user.activities" class="activity">
       <li *ngFor="let activity of activities">

@@ -48,7 +48,8 @@ totalPages:any;
       email: ['', [Validators.required, Validators.email]],
       phone_number: ['', [Validators.required]],
       gender: ['', [Validators.required]],
-      birthday: ['', [Validators.required]]
+      birthday: ['', [Validators.required]],
+      password: ['', [Validators.required]]
     });
   }
 

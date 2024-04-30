@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import {CommonModule, NgIf, UpperCasePipe} from '@angular/common';
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';;
+import { CommonModule, NgIf, UpperCasePipe } from '@angular/common';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';;
 import { User } from '../models/user';
 import { Activity } from '../models/activity';
 import { Comment } from '../models/comment';
@@ -14,7 +14,7 @@ import { ActivityService } from '../services/activity.service';
   selector: 'app-user-details',
   standalone: true,
   templateUrl: './user-details.component.html',
-  imports: [FormsModule, NgIf, UpperCasePipe, CommonModule, ActivityDetailsComponent, CommentDetailsComponent,  ReactiveFormsModule],
+  imports: [FormsModule, NgIf, UpperCasePipe, CommonModule, ActivityDetailsComponent, CommentDetailsComponent, ReactiveFormsModule],
   styleUrl: './user-details.component.css'
 })
 export class UserDetailsComponent {
@@ -35,41 +35,45 @@ export class UserDetailsComponent {
   comments: Comment[] = [];
   listActivities: Activity[] = [];
 
-  editUser: User=   {  '_id': '',
-  'name': '',
- 'email':'@gmail.com', 
- 'phone_number':'',
- 'gender':'',
- 'birthday': new Date()
-};
+  editUser: User = {
+    '_id': '',
+    'name': '',
+    'email': '@gmail.com',
+    'phone_number': '',
+    'gender': '',
+    'birthday': new Date(),
+    'password': ''
+  };
 
   showActivityDetails: any;
-  showCommentDetails:any;
+  showCommentDetails: any;
 
-constructor(public userService: UserService, public activityService: ActivityService, private formBuilder: FormBuilder) {
-  this.editUserForm = this.formBuilder.group({
-    name: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]],
-    phone_number: ['', [Validators.required]],
-    gender: ['', [Validators.required]],
-    birthday: ['', [Validators.required]]
-  });
+  constructor(public userService: UserService, public activityService: ActivityService, private formBuilder: FormBuilder) {
+    this.editUserForm = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      phone_number: ['', [Validators.required]],
+      gender: ['', [Validators.required]],
+      birthday: ['', [Validators.required]],
+      password: ['', [Validators.required]]
+    });
 
-  // Comprobar si hay un usuario recibido como entrada y actualizar el formulario si es necesario
-}
+    // Comprobar si hay un usuario recibido como entrada y actualizar el formulario si es necesario
+  }
 
-public updateFormWithUserData(user: User): void {
-  // Actualizar los valores del formulario con los datos del usuario
-  this.editUserForm.patchValue({
-    name: user.name,
-    email: user.email,
-    phone_number: user.phone_number,
-    gender: user.gender,
-    birthday: user.birthday
-  });
-}
+  public updateFormWithUserData(user: User): void {
+    // Actualizar los valores del formulario con los datos del usuario
+    this.editUserForm.patchValue({
+      name: user.name,
+      email: user.email,
+      phone_number: user.phone_number,
+      gender: user.gender,
+      birthday: user.birthday,
+      password: user.password
+    });
+  }
 
-  update: boolean= false;
+  update: boolean = false;
   isActivitySelected: boolean = false;
   isCommentSelected: boolean = false;
 
@@ -77,13 +81,13 @@ public updateFormWithUserData(user: User): void {
   ngOnInit() {
     if (this.user) {
       this.updateFormWithUserData(this.user);
-    } 
-    
+    }
+
     this.activities = this.user?.activities ?? [];
     this.comments = this.user?.comments ?? [];
     this.listActivities = this.user?.listActivities ?? [];
   }
- 
+
   onActivityUpdated(activity: Activity): void {
     this.activityUpdated = activity;
   }
@@ -114,18 +118,20 @@ public updateFormWithUserData(user: User): void {
       email: formData.email,
       phone_number: formData.phone_number,
       gender: formData.gender,
-      birthday: formData.birthday
+      birthday: formData.birthday,
+      password: formData.password
     };
 
-    this.userService.updateUser(this.editUser).subscribe (editUser =>{
-      this.user =   {
+    this.userService.updateUser(this.editUser).subscribe(editUser => {
+      this.user = {
         '_id': this.editUser?._id!,
-      'name': this.editUser?.name!,
-     'email':this.editUser?.email!,
-     'phone_number':this.editUser?.phone_number!,
-     'gender': this.editUser?.gender!,
-     'birthday': this.editUser?.birthday!
-    } 
+        'name': this.editUser?.name!,
+        'email': this.editUser?.email!,
+        'phone_number': this.editUser?.phone_number!,
+        'gender': this.editUser?.gender!,
+        'birthday': this.editUser?.birthday!,
+        'password': this.editUser?.password!
+      }
       this.userUpdated.emit(this.editUser);
     });
   }
@@ -143,10 +149,10 @@ public updateFormWithUserData(user: User): void {
         this.activities[index] = this.activityUpdated;
       }
     }
-     
+
     this.selectedActivity = undefined;
     this.isActivitySelected = false;
-    this.activitySelected.emit(false); 
+    this.activitySelected.emit(false);
   }
 
   onSelectComment(comment: Comment): void {
@@ -162,10 +168,10 @@ public updateFormWithUserData(user: User): void {
         this.comments[index] = this.commentUpdated;
       }
     }
-     
+
     this.selectedComment = undefined;
     this.isCommentSelected = false;
-    this.commentSelected.emit(false); 
-  } 
+    this.commentSelected.emit(false);
+  }
 
 }

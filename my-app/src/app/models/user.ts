@@ -8,4 +8,5 @@ export interface User {
     listActivities?: [],
     activities?: [],
     comments?: [],
+    password: string
   }
