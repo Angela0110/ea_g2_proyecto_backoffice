@@ -1,6 +1,7 @@
-<h3>Comments:</h3>
+<div class="custom-button" type="button" *ngIf="!showCommentForm" (click)="showComment(true)">Add new comment</div>
+<div class="custom-button" type="button" *ngIf="showCommentForm" (click)="showComment(false)">-</div>
 
-<div class="commentBox">
+<div class="commentBox" *ngIf="showCommentForm">
     <p>Leave a comment</p>
     <form [formGroup]="postCommentForm" (ngSubmit)="postComment()">
     
@@ -32,10 +33,10 @@
     <ul class="comments">
         <li *ngFor="let comment of comments">
             <div><span class="title">{{comment.title}}:</span></div>
-            <div><span  class="content">{{comment.content}}</span></div>
-            <div><span  class="review">{{comment.review}} ☆</span></div>
-            <div><span  class="users">User ID: {{comment.users}}</span></div>
-            <button type="button" (click)="deleteComment(comment)">Delete comment</button>
+            <div class="content">{{comment.content}}</div>
+            <div class="review">{{comment.review}} ☆</div>
+            <div class="users">User ID: {{comment.users}}</div>
+            <div class="custom-button" type="button" (click)="deleteComment(comment)">Delete comment</div>
             <br>
         </li>
         <button type="button" (click)="previousPage()" [disabled]="first_page"><span>{{previous}}</span></button>

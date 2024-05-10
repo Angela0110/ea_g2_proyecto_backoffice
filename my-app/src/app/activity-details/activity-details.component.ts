@@ -54,7 +54,8 @@ export class ActivityDetailsComponent {
 constructor(public activityService: ActivityService, private formBuilder: FormBuilder) {
   this.editActivityForm = this.formBuilder.group({
     name: ['', [Validators.required]],
-    description: ['', [Validators.required]]
+    description: ['', [Validators.required]],
+    date: ['', [Validators.required]]
   });
 
   // Comprobar si hay un usuario recibido como entrada y actualizar el formulario si es necesario
@@ -87,7 +88,8 @@ public updateFormWithActivityData(activity: Activity): void {
   this.editActivityForm.patchValue({
     //_id: activity._id,
     name: activity.name,
-    description: activity.description
+    description: activity.description,
+    date: activity.date
   });
 }
 

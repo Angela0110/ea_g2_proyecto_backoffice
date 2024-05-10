@@ -1,0 +1,27 @@
+<div class="container">
+
+    <h2>Sign in</h2>
+
+    <form [formGroup]="signInForm" (ngSubmit)="signIn()" class="form-container">
+
+        <input type="email" id="email" formControlName="email" placeholder="Email"><br>
+        <div
+            *ngIf="signInForm.get('email')?.invalid && (signInForm.get('email')?.dirty || signInForm.get('email')?.touched)">
+            <div *ngIf="signInForm.get('email')?.errors?.['required']" class="required-error">Email es requerido.</div>
+        </div>
+
+        <input type="password" id="password" formControlName="password" placeholder="Password"><br>
+        <div
+            *ngIf="signInForm.get('password')?.invalid && (signInForm.get('password')?.dirty || signInForm.get('password')?.touched)">
+            <div *ngIf="signInForm.get('password')?.errors?.['required']" class="required-error">Password es
+                obligatorio.</div>
+        </div>
+
+        <button type="submit" [disabled]="signInForm.invalid">Sign in</button>
+    </form>
+
+    <div *ngIf="errorOccurred" class="error-message">
+        Error al iniciar sesión
+    </div>
+
+</div>

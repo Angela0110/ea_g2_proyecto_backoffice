@@ -2,7 +2,6 @@ import { Component, Output, Input, EventEmitter } from '@angular/core';
 import { User } from '../models/user';
 import {FormsModule} from '@angular/forms';
 import { UserDetailsComponent } from '../user-details/user-details.component';
-import { ActivityDetailsComponent } from '../activity-details/activity-details.component';
 import { UserService } from '../services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -61,14 +60,7 @@ totalPages:any;
     this.totalPages=this.user.totalPages;
     this.total=this.user.totalUser;
     this.users=this.user.users
-      
-      //this.count=users.totalPages;
-      //this.totalUsers=users.totalUsers;
-      console.log(this.count,this.page);
-      console.log(this.total,this.totalUsers);
-      console.log("estoy dentro",this.users);
-      
-    
+   
     })
   }
 

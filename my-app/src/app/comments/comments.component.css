@@ -27,3 +27,15 @@
     width: 65pt;
     height: 15px;    
 }
+
+.custom-button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #dde9f5; /* Color de fondo del botón */
+    color: #090909; /* Color del texto */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px; 
+    margin-left: 20px;
+}

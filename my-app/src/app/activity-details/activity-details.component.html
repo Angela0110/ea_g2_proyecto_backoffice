@@ -3,38 +3,44 @@
 
 <div *ngIf="update">
   <form [formGroup]="editActivityForm" (ngSubmit)="updateActivity()">
-    
+
     <label for="name">Name:</label>
     <input type="name" id="name" formControlName="name"><br>
-    <div *ngIf="editActivityForm.get('name')?.invalid && (editActivityForm.get('name')?.dirty || editActivityForm.get('name')?.touched)">
+    <div
+      *ngIf="editActivityForm.get('name')?.invalid && (editActivityForm.get('name')?.dirty || editActivityForm.get('name')?.touched)">
       <div *ngIf="editActivityForm.get('name')?.errors?.['required']" class="required-error">Name es requerido.</div>
     </div>
-    
+
     <label for="description">Description:</label>
     <input type="description" id="description" formControlName="description"><br>
-    <div *ngIf="editActivityForm.get('description')?.invalid && (editActivityForm.get('description')?.dirty || editActivityForm.get('description')?.touched)">
-      <div *ngIf="editActivityForm.get('description')?.errors?.['required']" class="required-error">Description es obligatorio.</div>
+    <div
+      *ngIf="editActivityForm.get('description')?.invalid && (editActivityForm.get('description')?.dirty || editActivityForm.get('description')?.touched)">
+      <div *ngIf="editActivityForm.get('description')?.errors?.['required']" class="required-error">Description es
+        obligatorio.</div>
     </div>
 
     <label for="date">Date:</label>
     <input type="text" id="date" formControlName="date"><br>
-    <div *ngIf="editActivityForm.get('date')?.invalid && (editActivityForm.get('date')?.dirty || editActivityForm.get('date')?.touched)">
+    <div
+      *ngIf="editActivityForm.get('date')?.invalid && (editActivityForm.get('date')?.dirty || editActivityForm.get('date')?.touched)">
       <div *ngIf="editActivityForm.get('date')?.errors?.['required']" class="required-error">Date es obligatorio.</div>
     </div>
-      
-    <button *ngIf="update" type="submit" [disabled]="editActivityForm.invalid">Update Activity</button> 
+
+    <button *ngIf="update" type="submit" [disabled]="editActivityForm.invalid">Update Activity</button>
 
   </form>
 </div>
 
 <div *ngIf="activity">
-  <h2>{{activity.name}} </h2>
-  <button (click)="openParticipateModal()">Participate</button>
+  <div class="header">
+    <h2>{{activity.name}}</h2>
+    <button (click)="openParticipateModal()">Participate</button>
+  </div>
   <div><span>ID:</span> {{activity._id}}</div>
   <div><span>Description:</span> {{activity.description}}</div>
   <div><span>{{rating}} ☆</span></div>
   <div><span>Date:</span> {{activity.date}}</div>
-  <div *ngIf="user"><span>Owner:</span> 
+  <div *ngIf="user"><span>Owner:</span>
     <div class="author-details">
       <div><span>ID:</span> {{user._id}}</div>
       <div><span>Name:</span> {{user.name}}</div>
@@ -43,13 +49,18 @@
       <div><span>Gender:</span> {{user.gender}}</div>
     </div>
   </div>
-  <div><span>List Users:</span> 
+  <div>
+    <span>List Users:</span>
     <div *ngIf="activity.listUsers" class="user">
-      <li *ngFor="let user of users">
-        <span> {{user.name}} </span>
-      </li>
+      <ul>
+        <li *ngFor="let user of users">
+          <span class="bullet">•</span>
+          <p class="username">{{user.name}}</p>
+        </li>
+      </ul>
     </div>
-  </div> 
+  </div>
+  <div><span>Comments:</span></div>
 
   <div *ngIf="showParticipateModal">
     <div class="modal">
@@ -59,9 +70,9 @@
       <button (click)="closeParticipateModal()">Cancel</button>
     </div>
   </div>
-  
+
   <app-comments [activity]="ActivityID" (commentsUpdate)="refreshActivity()"></app-comments>
 
-  
+
   <button (click)="deselect.emit()">Back</button>
 </div>

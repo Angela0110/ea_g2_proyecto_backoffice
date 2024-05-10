@@ -46,3 +46,7 @@ h1 {
   .required-error {
     color: red;
   }
+
+  span {
+    font-weight: bold;
+  }

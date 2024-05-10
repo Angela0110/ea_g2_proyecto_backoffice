@@ -18,6 +18,8 @@ export class CommentsComponent {
 
   postCommentForm: FormGroup;
 
+  showCommentForm: Boolean = false;
+
   page = 0;
   comments: Comment[] = [];
   test?: String;
@@ -93,13 +95,15 @@ export class CommentsComponent {
       this.comments = comments;
     })
   }
-
-  deleteComment(comment: Comment): void{
-    console.log("Eliminando " + comment._id);
-    this.commentService.deleteComment(comment._id!).subscribe (res =>{
+  deleteComment(comment: Comment): void {
+    this.commentService.deleteComment(comment._id!).subscribe(res => {
       console.log(res);
+      this.comments = this.comments.filter(c => c !== comment);
       this.commentsUpdate.emit();
     })
-    comment.title = "DELETED";
+  }
+
+  showComment(state: boolean) {
+    this.showCommentForm = state;
   }
 }

@@ -122,18 +122,28 @@ export class UserDetailsComponent {
       password: formData.password
     };
 
-    this.userService.updateUser(this.editUser).subscribe(editUser => {
-      this.user = {
-        '_id': this.editUser?._id!,
-        'name': this.editUser?.name!,
-        'email': this.editUser?.email!,
-        'phone_number': this.editUser?.phone_number!,
-        'gender': this.editUser?.gender!,
-        'birthday': this.editUser?.birthday!,
-        'password': this.editUser?.password!
-      }
-      this.userUpdated.emit(this.editUser);
-    });
+    this.userService.updateUser(this.editUser).subscribe(
+      editUser => {
+        this.user = {
+          '_id': this.editUser?._id!,
+          'name': this.editUser?.name!,
+          'email': this.editUser?.email!,
+          'phone_number': this.editUser?.phone_number!,
+          'gender': this.editUser?.gender!,
+          'birthday': this.editUser?.birthday!,
+          'password': this.editUser?.password!
+        };
+        this.userUpdated.emit(this.editUser);
+      },
+      error => {
+        if (error.status === 403) {
+          console.error('Error 403: Acceso prohibido.');
+        } else {
+          console.error('Error:', error);
+        }
+        this.userUpdated.emit(undefined);
+      },
+    );
   }
 
   onSelect(activity: Activity): void {

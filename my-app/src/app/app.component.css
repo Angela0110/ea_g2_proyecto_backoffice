@@ -26,3 +26,10 @@ ul {
   .active {
     background-color: #51a9e3;
   }
+
+  .logout {
+    float: right; /* Alineamos el enlace a la derecha */
+  }
+
+  
+  

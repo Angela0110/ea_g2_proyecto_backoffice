@@ -1,13 +1,19 @@
 <h1>{{title}}</h1>
-<nav>
-    <ul>
-        <li>
-            <a routerLink="/users" routerLinkActive="active">Users</a>
-        </li>
-        <li>
-            <a routerLink="/activities" routerLinkActive="active">Activities</a>
-        </li>
-    </ul>    
-</nav>
+
+<div *ngIf="currentRoute && (currentRoute.includes('/users') || currentRoute.includes('/activities'))">
+    <nav>
+        <ul>
+            <li>
+                <a routerLink="/users" routerLinkActive="active">Users</a>
+            </li>
+            <li>
+                <a routerLink="/activities" routerLinkActive="active">Activities</a>
+            </li>
+            <li class="logout">
+                <a routerLink="/login" style="color: red;" (click)="logout()">Cerrar sesión</a>
+            </li>
+        </ul>    
+    </nav>
+</div>
 
 <router-outlet></router-outlet>

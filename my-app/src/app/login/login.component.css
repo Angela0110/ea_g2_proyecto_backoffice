@@ -1,0 +1,55 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Apila los elementos verticalmente */
+  }
+
+  .container h2 {
+    margin-right: 230px;
+    font-size: 30px;
+    font-weight: bold; /* Texto en negrita */
+    font-style: italic; /* Texto en cursiva */
+    }
+
+  .error-message{
+    margin-top: 20px;
+    color: red;
+  }
+
+  .form-container {
+    width: 300px; /* Ancho del formulario */
+    border-radius: 25px; /* Radio de borde */
+    border: 2px solid rgb(112, 112, 112); /* Color y grosor del borde */
+    padding: 20px; /* Espaciado interno */
+    
+  }
+
+  .form-container input {
+    width: 92%;
+    border-radius: 25px; /* Radio de borde */
+    border: 2px solid rgb(112, 112, 112); /* Color y grosor del borde */
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .required-error {
+    color: red;
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
+  
+  button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff; /* Color de fondo del botón */
+    color: #fff; /* Color de texto del botón */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0056b3; /* Color de fondo del botón al pasar el ratón */
+  }
+
