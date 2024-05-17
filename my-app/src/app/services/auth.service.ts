@@ -7,12 +7,12 @@ import { Observable } from 'rxjs/internal/Observable';
   providedIn: 'root'
 })
 export class AuthService {
-  private authToken: string | null = null;
+  private authTokenKey = 'authToken'; // Clave para el token en localStorage
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getAuthToken(): string | null {
-    return this.authToken;
+    return localStorage.getItem(this.authTokenKey);
   }
 
   signIn(logIn: LogIn): Observable<any> {
@@ -20,6 +20,6 @@ export class AuthService {
   }
 
   setAuthToken(token: string): void {
-    this.authToken = token;
+    localStorage.setItem(this.authTokenKey, token);
   }
 }

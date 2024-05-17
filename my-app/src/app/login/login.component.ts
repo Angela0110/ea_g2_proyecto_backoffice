@@ -31,7 +31,7 @@ export class LoginComponent {
       this.authService.signIn(this.signInForm.value).subscribe(
         (response) => {
           // Redirigir al componente 'users' si la respuesta es satisfactoria
-          this.authService.setAuthToken(response);
+          this.authService.setAuthToken(response.token);
           this.router.navigate(['/users']);
         },
         (error) => {
